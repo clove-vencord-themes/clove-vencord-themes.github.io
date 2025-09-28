@@ -7,8 +7,11 @@
     <meta name="description" content="The API hosting for all Clove's Vencord Themes">
     
     <!-- Favicon -->
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+    <link rel="manifest" href="site.webmanifest">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -88,11 +91,23 @@
             100% { left: 100%; }
         }
 
-        .leaf {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: block;
-            filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.5));
+        .logo-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.5));
+            transition: all 0.3s ease;
+            border: 2px solid rgba(57, 255, 20, 0.3);
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 30px rgba(57, 255, 20, 0.8));
+            border-color: #39FF14;
         }
 
         h1 {
@@ -325,7 +340,9 @@
 <body>
     <div class="container">
         <div class="card floating">
-            <span class="leaf">🌿</span>
+            <div class="logo-container">
+                <img src="favicon.png" alt="Clove Logo" class="logo">
+            </div>
             <h1>Clove Vencord Themes API</h1>
             <p class="subtitle">The API hosting for all Clove's Vencord Themes</p>
             
