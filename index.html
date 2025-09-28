@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clove Vencord Themes API</title>
+    <meta name="description" content="The API hosting for all Clove's Vencord Themes">
+    <link rel="icon" href="https://raw.githubusercontent.com/clove-vencord-themes/themes/main/assets/favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(57, 255, 20, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 139, 139, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            color: #ffffff;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(40, 40, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(57, 255, 20, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #39FF14, #008B8B, transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .leaf {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.5));
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #39FF14, #008B8B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #39FF14, #008B8B, transparent);
+            margin: 3rem 0;
+            border-radius: 1px;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+
+        .theme-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .theme-link {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(0, 139, 139, 0.1));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: block;
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(0, 139, 139, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-link:hover::before {
+            opacity: 1;
+        }
+
+        .theme-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(57, 255, 20, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: #39FF14;
+        }
+
+        .theme-link h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #39FF14;
+            position: relative;
+            z-index: 1;
+        }
+
+        .theme-link p {
+            color: #b0b0b0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vencord-link {
+            border-color: rgba(57, 255, 20, 0.3);
+        }
+
+        .vencord-link:hover {
+            border-color: #39FF14;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .betterdiscord-link {
+            border-color: rgba(0, 139, 139, 0.3);
+        }
+
+        .betterdiscord-link:hover {
+            border-color: #008B8B;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(0, 139, 139, 0.3);
+        }
+
+        .betterdiscord-link h3 {
+            color: #008B8B;
+        }
+
+        .contributor-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .contributor-badge {
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .contributor-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .contributors {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            color: #39FF14;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+
+        .footer-text {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .license-text {
+            color: #008B8B;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .card {
+                padding: 2rem 1rem;
+            }
+            
+            .theme-links {
+                grid-template-columns: 1fr;
+            }
+
+            .leaf {
+                font-size: 3rem;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 
+                    0 20px 40px rgba(0, 0, 0, 0.3),
+                    0 0 20px rgba(57, 255, 20, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 20px 40px rgba(0, 0, 0, 0.3),
+                    0 0 30px rgba(57, 255, 20, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite, glow 6s ease-in-out infinite;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #39FF14, #008B8B);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #45ff20, #00a0a0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card floating">
+            <span class="leaf">🌿</span>
+            <h1>Clove Vencord Themes API</h1>
+            <p class="subtitle">The API hosting for all Clove's Vencord Themes</p>
+            
+            <div class="divider"></div>
+            
+            <h2 class="section-title">🎨 Theme Collections</h2>
+            
+            <div class="theme-links">
+                <a href="https://github.com/clove-vencord-themes/themes/tree/main/vencord" class="theme-link vencord-link">
+                    <h3>Vencord Themes</h3>
+                    <p>Browse our Vencord theme collection</p>
+                </a>
+                
+                <a href="https://github.com/clove-vencord-themes/themes/tree/main/betterdiscord" class="theme-link betterdiscord-link">
+                    <h3>BetterDiscord Themes</h3>
+                    <p>Browse our BetterDiscord theme collection</p>
+                </a>
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="contributors">
+                <h3>🤝 Contributors</h3>
+                <p style="margin-bottom: 1rem; color: #b0b0b0;">Thanks to all the amazing contributors who make this project possible!</p>
+                
+                <div class="contributor-badges">
+                    <a href="https://github.com/clovetwilight3" class="contributor-badge" style="background: linear-gradient(135deg, rgba(57, 255, 20, 0.2), rgba(57, 255, 20, 0.1)); border-color: #39FF14;">
+                        <span>@CloveTwilight3</span>
+                    </a>
+                    <a href="https://github.com/themidnightcyan" class="contributor-badge" style="background: linear-gradient(135deg, rgba(0, 139, 139, 0.2), rgba(0, 139, 139, 0.1)); border-color: #008B8B;">
+                        <span>@TheMidnightCyan</span>
+                    </a>
+                </div>
+                
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    <a href="https://github.com/clove-vencord-themes/clove-vencord-themes.github.io/graphs/contributors" style="color: #39FF14; text-decoration: none;">
+                        View all contributors →
+                    </a>
+                </p>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <p class="license-text">
+                📄 This project is licensed under the MIT License
+            </p>
+            
+            <p class="footer-text">
+                Made with ❤️ by the Clove Vencord Themes Team
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Add subtle interactive effects
+        document.querySelectorAll('.theme-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Simple click analytics
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                console.log('Link clicked:', this.href);
+            });
+        });
+    </script>
+</body>
+</html>
